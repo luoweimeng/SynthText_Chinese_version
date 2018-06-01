@@ -19,7 +19,7 @@ import os, sys, traceback
 import os.path as osp
 from synthgen import *
 from common import *
-import wget, tarfile
+# import wget, tarfile
 import cv2 as cv
 import time 
 
@@ -43,7 +43,7 @@ def get_data():
   if not osp.exists(DB_FNAME):
     try:
       colorprint(Color.BLUE,'\tdownloading data (56 M) from: '+DATA_URL,bold=True)
-      print
+
       sys.stdout.flush()
       out_fname = 'data.tar.gz'
       wget.download(DATA_URL,out=out_fname)
@@ -139,7 +139,8 @@ def main(viz=False):
       #  there are 2 estimates of depth (represented as 2 "channels")
       #  here we are using the second one (in some cases it might be
       #  useful to use the other one):
-      img_resize=img.resize(db['depth'][imname].shape)
+      print(db['depth'][imname].shape[1:])
+      img_resize=img.resize(db['depth'][imname].shape[1:])
       depth = db['depth'][imname][:].T
       print 'depth shape,img shape',depth.shape,np.array(img).shape
       print 'depth info',depth
